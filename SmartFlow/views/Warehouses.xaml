@@ -1,0 +1,99 @@
+﻿<Page x:Class="SmartFlow.views.Warehouses"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:SmartFlow.views"
+        mc:Ignorable="d"
+        Title="Warehouses" Height="auto" Width="auto">
+    <Page.Resources>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries >
+                <ResourceDictionary Source="../Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <DockPanel>
+        <Grid DockPanel.Dock="Top" Height="260">
+            <Label Content="Warehouse ID:" HorizontalAlignment="Left" Margin="44,55,0,0" VerticalAlignment="Top"/>
+            <TextBlock x:Name="tbId" HorizontalAlignment="Left" Margin="188,59,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" RenderTransformOrigin="-0.491,0.006"/>
+            <Label Content="Warehouse Name:" HorizontalAlignment="Left" Margin="44,90,0,0" VerticalAlignment="Top" Width="139"/>
+            <TextBox x:Name="tbName" TextChanged="tbName_TextChanged" HorizontalAlignment="Left" Height="26" Margin="188,88,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="195"/>
+            <materialDesign:PackIcon Kind="Flare" VerticalAlignment="Center" Margin="388,96,0,146" Foreground="Red" Height="18" Width="13"/>
+            <Label Content="Address:" HorizontalAlignment="Left" Margin="44,124,0,0" VerticalAlignment="Top" Width="99"/>
+            <TextBox x:Name="tbAddress" HorizontalAlignment="Left" Height="73" Margin="188,122,0,0" TextWrapping="Wrap" AcceptsReturn="True" VerticalAlignment="Top" Width="195"/>
+            <Label Content="Phone Number" HorizontalAlignment="Left" Margin="44,212,0,0" VerticalAlignment="Top" Width="139"/>
+            <TextBox x:Name="tbPhoneNumber" HorizontalAlignment="Left" Height="26" Margin="188,210,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="195"/>
+            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Warehouses Management" VerticalAlignment="Top" Height="35" Width="454" FontSize="24"/>
+            <Button x:Name="btAdd" Height="27" Width="100" VerticalAlignment="Top" Margin="518,159,0,0" HorizontalAlignment="Left" Background="#FFFFBA00" Click="btAdd_Click" IsEnabled="False">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <Grid Width="100">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid>
+                            <materialDesign:PackIcon Kind="Add" VerticalAlignment="Center"/>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <TextBlock Text="Add"/>
+                        </Grid>
+                    </Grid>
+                </StackPanel>
+            </Button>
+            <Button x:Name="btUpdate" Height="27" Width="100" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="518,208,0,0" Background="#FFFFBA00" Click="btUpdate_Click" IsEnabled="False">
+                <StackPanel Orientation="Horizontal">
+                    <Grid Width="100">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid>
+                            <materialDesign:PackIcon Kind="Update" VerticalAlignment="Center"/>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <TextBlock Text="Update"/>
+                        </Grid>
+                    </Grid>
+                </StackPanel>
+            </Button>
+        </Grid>
+
+        <ListView Name="lvDataBinding" SelectionMode="Single" Margin="5" SelectionChanged="lvDataBinding_SelectionChanged">
+            <ListView.View>
+                <GridView AllowsColumnReorder="true">
+                    <GridViewColumn Width="20" DisplayMemberBinding="{Binding Path=Id}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Id">#</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="200" DisplayMemberBinding="{Binding Path=Name}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Name">Warehouse Name</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="300" DisplayMemberBinding="{Binding Path=Address}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Address">Address</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="200" DisplayMemberBinding="{Binding Path=PhoneNumber}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="PhoneNumber">PhoneNumber</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Height="27" Width="30" VerticalAlignment="Center" Background="#FFFFBA00" Click="btDelete_Click">
+                                    <materialDesign:PackIcon Kind="Delete" VerticalAlignment="Center" Margin="-10"/>
+                                </Button>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </DockPanel>
+</Page>

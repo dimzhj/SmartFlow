@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:SmartFlow"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:String x:Key="MainWindow.Title">SmartFlow Inventory Information System</system:String>
+    <system:String x:Key="MainWindow.Logout">Log out</system:String>
+    <system:String x:Key="MainWindow.Minimize">Minimize</system:String>
+    <system:String x:Key="MainWindow.Maximize">Maximize</system:String>
+    <system:String x:Key="MainWindow.Close">Close</system:String>
+    <system:String x:Key="MainWindow.btHome">Home</system:String>
+    <system:String x:Key="MainWindow.btInventory">Inventory</system:String>
+    <system:String x:Key="MainWindow.btStorageChange">Storage Change</system:String>
+    <system:String x:Key="MainWindow.btTransport">Transport</system:String>
+    <system:String x:Key="MainWindow.btProducts">Products</system:String>
+    <system:String x:Key="MainWindow.btStatistics">Statistics</system:String>
+    <system:String x:Key="MainWindow.btInboundAndOut">Inbound &amp; Out</system:String>
+    <system:String x:Key="MainWindow.btMontylyReport">Montyly Report</system:String>
+    <system:String x:Key="MainWindow.btAdministrator">Administrator</system:String>
+    <system:String x:Key="MainWindow.btWarehouses">Warehouses</system:String>
+    <system:String x:Key="MainWindow.btUsers">Users</system:String>
+    <system:String x:Key="MainWindow.btSuppliersAndClients">Suppliers&amp;Clients</system:String>
+    <system:String x:Key="Home.Welcome">welcome to SmartFlow Syetem.</system:String>
+</ResourceDictionary>

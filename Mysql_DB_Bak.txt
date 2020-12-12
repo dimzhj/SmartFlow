@@ -1,0 +1,87 @@
+CREATE TABLE `Products` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(100) NOT NULL,
+  `Description` varchar(300) DEFAULT NULL,
+  `Cost` double DEFAULT '0',
+  `CurrentQuantity` int(11) DEFAULT '0',
+  `WarehouseId` int(11) NOT NULL,
+  `Disabled` bit(1) NOT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `Product_Warehouse_idx` (`WarehouseId`),
+  CONSTRAINT `Product_Warehouse` FOREIGN KEY (`WarehouseId`) REFERENCES `Warehouses` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `StorageChanges` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `ChangeType` enum('In','Out') NOT NULL,
+  `ProductId` int(11) NOT NULL,
+  `Quantity` int(11) NOT NULL,
+  `Price` double NOT NULL,
+  `SuppliersClientsId` int(11) NOT NULL,
+  `WarehouseId` int(11) NOT NULL,
+  `ChangeDate` date NOT NULL,
+  `UserId` int(11) NOT NULL,
+  `TransportID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `Change_Warehouse_idx` (`WarehouseId`),
+  KEY `Change_User_idx` (`UserId`),
+  KEY `Change_Product_idx` (`ProductId`),
+  KEY `Change_SupplierClient_idx` (`SuppliersClientsId`),
+  CONSTRAINT `Change_Product` FOREIGN KEY (`ProductId`) REFERENCES `Products` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `Change_SupplierClient` FOREIGN KEY (`SuppliersClientsId`) REFERENCES `SuppliersClients` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `Change_User` FOREIGN KEY (`UserId`) REFERENCES `Users` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Change_Warehouse` FOREIGN KEY (`WarehouseId`) REFERENCES `Warehouses` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `SuppliersClients` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(100) NOT NULL,
+  `Address` varchar(150) DEFAULT NULL,
+  `PhoneNumber` varchar(45) DEFAULT NULL,
+  `Type` enum('Supplier','Client') NOT NULL,
+  `WarehouseID` int(11) NOT NULL,
+  `Disabled` bit(1) NOT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `supcli_warehouse_idx` (`WarehouseID`),
+  CONSTRAINT `supcli_warehouse` FOREIGN KEY (`WarehouseID`) REFERENCES `Warehouses` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `Transports` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `TransType` enum('In','Out') NOT NULL,
+  `ClientID` int(11) NOT NULL,
+  `TransportDate` date NOT NULL,
+  `WarehouseId` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `transport_warehouser_idx` (`WarehouseId`),
+  KEY `transport_client_idx` (`ClientID`),
+  KEY `transport_user_idx` (`UserID`),
+  CONSTRAINT `transport_client` FOREIGN KEY (`ClientID`) REFERENCES `SuppliersClients` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `transport_user` FOREIGN KEY (`UserID`) REFERENCES `Users` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `transport_warehouser` FOREIGN KEY (`WarehouseId`) REFERENCES `Warehouses` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `Users` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `UserName` varchar(10) NOT NULL,
+  `Password` varchar(10) NOT NULL,
+  `Name` varchar(25) NOT NULL,
+  `WarehouseID` int(11) NOT NULL,
+  `Language` enum('EN','FR') DEFAULT 'EN',
+  `IsAdmin` bit(1) DEFAULT NULL,
+  `Photo` mediumblob,
+  PRIMARY KEY (`Id`),
+  UNIQUE KEY `UserName_UNIQUE` (`UserName`),
+  KEY `Employee_Warehouse_idx` (`WarehouseID`),
+  CONSTRAINT `Employee_Warehouse` FOREIGN KEY (`WarehouseID`) REFERENCES `Warehouses` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `Warehouses` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) NOT NULL,
+  `Address` varchar(150) DEFAULT NULL,
+  `PhoneNumber` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  UNIQUE KEY `Name_UNIQUE` (`Name`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;

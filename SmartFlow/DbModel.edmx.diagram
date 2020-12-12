@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="904b01adecfd4147a7c1e38a3ae180dc" Name="Diagram1">
+        <EntityTypeShape EntityType="testJianZhanagModel.Product" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="testJianZhanagModel.StorageChanx" Width="1.5" PointX="5.25" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="testJianZhanagModel.SuppliersClient" Width="1.5" PointX="3" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="testJianZhanagModel.Transport" Width="1.5" PointX="8.25" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="testJianZhanagModel.User" Width="1.5" PointX="3" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="testJianZhanagModel.Warehouse" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <AssociationConnector Association="testJianZhanagModel.Product_Warehouse" ManuallyRouted="false" />
+        <AssociationConnector Association="testJianZhanagModel.Change_SupClient" ManuallyRouted="false" />
+        <AssociationConnector Association="testJianZhanagModel.Change_User" ManuallyRouted="false" />
+        <AssociationConnector Association="testJianZhanagModel.Change_Warehouse" ManuallyRouted="false" />
+        <AssociationConnector Association="testJianZhanagModel.supcli_warehouse" ManuallyRouted="false" />
+        <AssociationConnector Association="testJianZhanagModel.transport_client" ManuallyRouted="false" />
+        <AssociationConnector Association="testJianZhanagModel.transport_user" ManuallyRouted="false" />
+        <AssociationConnector Association="testJianZhanagModel.transport_warehouser" ManuallyRouted="false" />
+        <AssociationConnector Association="testJianZhanagModel.Employee_Warehouse" ManuallyRouted="false" />
+        <AssociationConnector Association="testJianZhanagModel.Change_Product" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

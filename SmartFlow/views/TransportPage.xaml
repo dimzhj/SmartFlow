@@ -1,0 +1,134 @@
+﻿<Page x:Class="SmartFlow.views.TransportPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:SmartFlow.views"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="Transport">
+    <Page.Resources>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries >
+                <ResourceDictionary Source="../Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <DockPanel>
+        <Grid DockPanel.Dock="Top" Height="310">
+            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="454" FontSize="24" Text="Transports Management"/>
+            <Label Content="ID:" HorizontalAlignment="Left" Margin="44,55,0,0" VerticalAlignment="Top"/>
+            <TextBlock x:Name="tbId" HorizontalAlignment="Left" Margin="152,59,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" RenderTransformOrigin="-0.491,0.006"/>
+            <materialDesign:PackIcon Kind="Flare" VerticalAlignment="Center" Margin="352,101,0,209" Foreground="Red" Height="10" Width="10" />
+            <ComboBox x:Name="comboSupClt" HorizontalAlignment="Left" IsEditable="True" Margin="152,93,0,0" VerticalAlignment="Top" Width="176" SelectionChanged="comboSupClt_SelectionChanged"/>
+            <DatePicker Name="dpChangeDate" HorizontalAlignment="Left" Margin="553,97,0,0" VerticalAlignment="Top" Width="173" SelectedDateChanged="dpChangeDate_SelectedDateChanged"/>
+            <Label Content="Total amount" HorizontalAlignment="Left" Margin="45,133,0,0" VerticalAlignment="Top" Width="83"/>
+            <Label Content="Warehouse" HorizontalAlignment="Left" Margin="45,169,0,0" VerticalAlignment="Top" Width="139"/>
+
+            <TextBlock x:Name="tbAmount" HorizontalAlignment="Left" Height="23" Margin="134,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" IsEnabled="False" Foreground="Red"/>
+
+            <ComboBox x:Name="comboWarehouse" HorizontalAlignment="Left" Margin="152,169,0,0" VerticalAlignment="Top" Width="175" IsEnabled="False"/>
+            <Label Content="Transport Date:" HorizontalAlignment="Left" Margin="442,97,0,0" VerticalAlignment="Top" Width="139"/>
+
+            <Label Content="Client" HorizontalAlignment="Left" Margin="46,97,0,0" VerticalAlignment="Top" Width="139"/>
+
+            <Button x:Name="btAdd" Height="27" Width="100" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="456,164,0,0" Background="#FFFFBA00" Click="btAdd_Click"  IsEnabled="False">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <Grid Width="100">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid>
+                            <materialDesign:PackIcon Kind="Add" VerticalAlignment="Center"/>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <TextBlock Text="Add"/>
+                        </Grid>
+                    </Grid>
+                </StackPanel>
+            </Button>
+            <Button x:Name="btUpdate" Height="27" Width="100" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="629,164,0,0" Background="#FFFFBA00" Click="btUpdate_Click" IsEnabled="False">
+                <StackPanel Orientation="Horizontal">
+                    <Grid Width="100">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid>
+                            <materialDesign:PackIcon Kind="Update" VerticalAlignment="Center"/>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <TextBlock Text="Update"/>
+                        </Grid>
+                    </Grid>
+                </StackPanel>
+            </Button>
+            <materialDesign:PackIcon Kind="Flare" VerticalAlignment="Center" Margin="742,97,0,213" Foreground="Red" Height="10" Width="10" />
+            <Label Content="Total quantity:" HorizontalAlignment="Left" Margin="183,133,0,0" VerticalAlignment="Top" Width="85"/>
+            <TextBlock x:Name="tbTotalqty" HorizontalAlignment="Left" Height="23" Margin="281,136,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" IsEnabled="False" Foreground="Red"/>
+
+            <TextBox x:Name="tbSearch"
+                  materialDesign:HintAssist.Hint="Search"
+                  materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
+                  materialDesign:HintAssist.FloatingScale="0.50"
+                  Text=""
+                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                  FontSize="18" TextChanged="tbSearch_TextChanged" Margin="46,232,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="281"/>
+            <Button x:Name="btPrint" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="442,242,0,0" Background="#FFFFBA00" Width="139" Click="btPrint_Click" IsEnabled="False">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Printer" VerticalAlignment="Center"/>
+                    <TextBlock Text="   Print"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="btManagerProd" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="629,242,0,0" Background="#FFFFBA00" IsEnabled="False" Click="btManagerProd_Click">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="AddBox" VerticalAlignment="Center"/>
+                    <TextBlock Text="Manager Prodts"/>
+                </StackPanel>
+            </Button>
+
+            <RadioButton x:Name="rbIn" Content="Inbound" HorizontalAlignment="Left" Margin="548,60,0,0" VerticalAlignment="Top" GroupName="type" IsChecked="True"/>
+            <RadioButton x:Name="rbOut" Content="Outbound" HorizontalAlignment="Left" Margin="649,60,0,0" VerticalAlignment="Top" GroupName="type"/>
+            <Label Content="Transport Type:" HorizontalAlignment="Left" Margin="442,57,0,0" VerticalAlignment="Top" Width="101"/>
+        </Grid>
+
+        <ListView Name="lvDataBinding" SelectionMode="Single" Margin="5" SelectionChanged="lvDataBinding_SelectionChanged">
+            <ListView.View>
+                <GridView AllowsColumnReorder="true">
+                    <GridViewColumn Width="20" DisplayMemberBinding="{Binding Path=Id}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Id">#</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="360" DisplayMemberBinding="{Binding Path=SuppliersClient.Name}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="SuppliersClient.Name">Client Name</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding Path=TransType}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="TransType">Transport Type</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="120" DisplayMemberBinding="{Binding Path=TransportDate, StringFormat='yyyy-MM-dd'}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="TransportDate">Transport Date</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Height="27" Width="30" VerticalAlignment="Center" Background="#FFFFBA00" Click="btDelete_Click">
+                                    <materialDesign:PackIcon Kind="Delete" VerticalAlignment="Center" Margin="-10"/>
+                                </Button>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </DockPanel>
+
+</Page>

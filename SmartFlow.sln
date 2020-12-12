@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29920.165
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartFlow", "SmartFlow\SmartFlow.csproj", "{CF4EAB22-1E77-400C-803B-B43EB9845F9C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CF4EAB22-1E77-400C-803B-B43EB9845F9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF4EAB22-1E77-400C-803B-B43EB9845F9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF4EAB22-1E77-400C-803B-B43EB9845F9C}.Debug|x64.ActiveCfg = Debug|x64
+		{CF4EAB22-1E77-400C-803B-B43EB9845F9C}.Debug|x64.Build.0 = Debug|x64
+		{CF4EAB22-1E77-400C-803B-B43EB9845F9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF4EAB22-1E77-400C-803B-B43EB9845F9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF4EAB22-1E77-400C-803B-B43EB9845F9C}.Release|x64.ActiveCfg = Release|x64
+		{CF4EAB22-1E77-400C-803B-B43EB9845F9C}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CAE375E4-E465-4870-8CEC-E58A29AA3493}
+	EndGlobalSection
+EndGlobal

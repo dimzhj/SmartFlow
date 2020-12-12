@@ -1,0 +1,176 @@
+﻿<Window x:Class="SmartFlow.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SmartFlow"
+        mc:Ignorable="d"
+        Title="SmartFLow Inventory Information System" 
+        Width="1024" Height="650" Icon="images/warehouse.png" 
+        WindowStartupLocation="CenterScreen" WindowStyle="None" 
+        AllowsTransparency="True"
+        ResizeMode="CanResizeWithGrip">
+
+    <Grid>
+        <Grid.Background >
+            <ImageBrush TileMode="Tile" Opacity="0.7" ImageSource="images/background-blue.png"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.ColumnSpan="2" Background="#FF7088AB" MouseDown="Grid_MouseDown">
+
+            <StackPanel HorizontalAlignment="Left" Margin="5 0" VerticalAlignment="Center">
+                <Image Source="images/warehouse.png" Width="25" Height="25"></Image>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Left" Margin="40 0">
+                <ComboBox Name="comboxLanguage" FontSize="15" Width="40" Foreground="#FFDAD5BC" SelectedIndex="0" VerticalContentAlignment="Center" SelectionChanged="comboxLanguage_SelectionChanged">
+                    <ComboBoxItem Content="EN"/>
+                    <ComboBoxItem Content="FR"/>
+                </ComboBox>                
+            </StackPanel>
+            <StackPanel Margin="100 0" VerticalAlignment="Center">
+                <TextBlock Text="{DynamicResource MainWindow.Title}" FontWeight="ExtraBold" FontSize="15" Foreground="#FFF5CC84"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0">
+                <Border x:Name="userPhotoBorder" HorizontalAlignment="Left" VerticalAlignment="Center" CornerRadius="15" BorderBrush="White" BorderThickness="1" Background="{x:Null}">
+                    <Image Name="userImage" Width="30" Height="30" Stretch="Fill">
+                        <Image.Clip>
+                            <EllipseGeometry RadiusX="15" RadiusY="15" Center="15,15"/>
+                        </Image.Clip>
+                    </Image>
+                </Border>
+
+
+
+                <Button Name="btSignOut" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Center" ToolTip="{DynamicResource MainWindow.Logout}" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Click="btSignOut_Click">
+                    <materialDesign:PackIcon Kind="Logout" Foreground="White" Width="25" Height="25"/>
+                </Button>
+                <Button Name="btMin" Click="btMin_Click" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="{DynamicResource MainWindow.Minimize}"  VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}">
+                    <materialDesign:PackIcon Kind="WindowMinimize"  Foreground="White" Width="25" Height="25"/>
+                </Button>
+                <Button Name="btMax" Click="btMax_Click" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="{DynamicResource MainWindow.Maximize}"  VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}">
+                    <materialDesign:PackIcon Kind="WindowMaximize"  Foreground="White" Width="25" Height="25"/>
+                </Button>
+                <Button Name="btClose" Click="btClose_Click" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="{DynamicResource MainWindow.Close}" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}">
+                    <materialDesign:PackIcon Kind="Close"  Foreground="White" Width="25" Height="25"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid Background="#FF7088AB">
+                    <Grid x:Name="GridCursorOrage" Width="5" Height="40" Background="Orange" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1">
+                <ScrollViewer Height="Auto" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch">
+                    <StackPanel>
+                        <StackPanel.Effect>
+                            <DropShadowEffect Direction="270" Color="LightYellow"  ShadowDepth="1"  RenderingBias="Quality" />
+                        </StackPanel.Effect>
+                        
+                        <Grid>
+                            <materialDesign:PackIcon Kind="Home" Width="15" Height="15" Foreground="White" Margin="8 12"/>
+                            <Button x:Name="btHome" Uid="0" HorizontalContentAlignment="Left" Background="{x:Null}" Content="{DynamicResource MainWindow.btHome}" BorderBrush="{x:Null}" Padding="36 5" Click="btNavigation_Click" Height="40"/>
+                        </Grid>
+
+                        <Grid>
+                            <materialDesign:PackIcon Kind="Forklift"  Width="15" Height="15" Margin="8 16" Foreground="White"/>
+                            <ListBox>
+                                <ListBoxItem Content="{DynamicResource MainWindow.btInventory}" Padding="37,14" FontSize="15"/>
+                            </ListBox>
+                            <Expander x:Name="ExpInventory" IsExpanded="False" Width="200" HorizontalAlignment="Right" Background="{x:Null}" Foreground="White">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid>
+                                        <materialDesign:PackIcon Kind="Home" Width="15" Height="15" Foreground="White" Margin="8 12"/>
+                                        <Button Uid="1" HorizontalContentAlignment="Left" Background="{x:Null}" Content="{DynamicResource MainWindow.btStorageChange}" BorderBrush="{x:Null}" Padding="76 5" Click="btNavigation_Click" Height="40" Width="400"/>
+                                    </Grid>
+                                    <Grid Grid.Row="1">
+                                        <materialDesign:PackIcon Kind="Home" Width="15" Height="15" Foreground="White" Margin="8 12"/>
+                                        <Button Uid="2" HorizontalContentAlignment="Left" Background="{x:Null}" Content="{DynamicResource MainWindow.btTransport}" BorderBrush="{x:Null}" Padding="76 5" Click="btNavigation_Click" Height="40" Width="400"/>
+                                    </Grid>
+                                </Grid>
+                            </Expander>
+                        </Grid>
+
+                        <Grid>
+                            <materialDesign:PackIcon Kind="Dresser" Width="15" Height="15" Foreground="White" Margin="8 12"/>
+                            <Button Uid="3" HorizontalContentAlignment="Left" Background="{x:Null}" Content="{DynamicResource MainWindow.btProducts}" BorderBrush="{x:Null}" Padding="36 5" Click="btNavigation_Click" Height="40"/>
+                        </Grid>
+
+                        <Grid>
+                            <materialDesign:PackIcon Kind="ChartBar"  Width="15" Height="15" Margin="8 16" Foreground="White"/>
+                            <ListBox>
+                                <ListBoxItem Content="{DynamicResource MainWindow.btStatistics}" Padding="37,14" FontSize="15"/>
+                            </ListBox>
+                            <Expander IsExpanded="False" Width="200" HorizontalAlignment="Right" Background="{x:Null}" Foreground="White">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid>
+                                        <materialDesign:PackIcon Kind="Home" Width="15" Height="15" Foreground="White" Margin="8 12"/>
+                                        <Button Uid="4" HorizontalContentAlignment="Left" Background="{x:Null}" Content="{DynamicResource MainWindow.btInboundAndOut}" BorderBrush="{x:Null}" Padding="76 5" Click="btNavigation_Click" Height="40" Width="400"/>
+                                    </Grid>
+                                    <Grid Grid.Row="1">
+                                        <materialDesign:PackIcon Kind="Home" Width="15" Height="15" Foreground="White" Margin="8 12"/>
+                                        <Button Uid="5" HorizontalContentAlignment="Left" Background="{x:Null}" Content="{DynamicResource MainWindow.btMontylyReport}" BorderBrush="{x:Null}" Padding="76 5" Click="btNavigation_Click" Height="40" Width="400"/>
+                                    </Grid>
+                                </Grid>
+                            </Expander>
+                        </Grid>
+
+                        <Grid>
+                            <materialDesign:PackIcon Name="adminIcon" Kind="Tools" Width="15" Height="15" Margin="8 16" Foreground="White"/>
+                            <ListBox>
+                                <ListBoxItem Name="lbiAdmin" Content="{DynamicResource MainWindow.btAdministrator}" Padding="37,14" FontSize="15"/>
+                            </ListBox>
+                            <Expander Name="ExpAdmin" IsExpanded="False" Width="200" HorizontalAlignment="Right" Background="{x:Null}" Foreground="White">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid>
+                                        <materialDesign:PackIcon Kind="Home" Width="15" Height="15" Foreground="White" Margin="8 12"/>
+                                        <Button Uid="6" HorizontalContentAlignment="Left" Background="{x:Null}" Content="{DynamicResource MainWindow.btWarehouses}" BorderBrush="{x:Null}" Padding="76 5" Click="btNavigation_Click" Height="40" Width="400"/>
+                                    </Grid>
+                                    <Grid Grid.Row="1">
+                                        <materialDesign:PackIcon Kind="Home" Width="15" Height="15" Foreground="White" Margin="8 12"/>
+                                        <Button Uid="7" HorizontalContentAlignment="Left" Background="{x:Null}" Content="{DynamicResource MainWindow.btUsers}" BorderBrush="{x:Null}" Padding="76 5" Click="btNavigation_Click" Height="40" Width="400"/>
+                                    </Grid>
+                                    <Grid Grid.Row="2">
+                                        <materialDesign:PackIcon Kind="Home" Width="15" Height="15" Foreground="White" Margin="8 12"/>
+                                        <Button Uid="8" HorizontalContentAlignment="Left" Background="{x:Null}" Content="{DynamicResource MainWindow.btSuppliersAndClients}" BorderBrush="{x:Null}" Padding="76 5" Click="btNavigation_Click" Height="40" Width="400"/>
+                                    </Grid>
+                                </Grid>
+                            </Expander>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Frame Name="showFrame" NavigationUIVisibility="Hidden" Background="#FFE7E8EC" Source="views/Home.xaml">
+
+            </Frame>
+        </Grid>
+    </Grid>
+</Window>

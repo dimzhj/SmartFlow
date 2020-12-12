@@ -1,0 +1,43 @@
+﻿<Page x:Class="SmartFlow.views.StatiscInOut"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:c="clr-namespace:ScottLogic.Controls.PieChart"
+      xmlns:b="clr-namespace:ScottLogic.Shapes"
+      xmlns:local="clr-namespace:SmartFlow.views"
+      mc:Ignorable="d" 
+      Height="auto" Width="auto"
+      Title="Statistics In and Out">
+    <Page.Resources>
+        <x:ArrayExtension Type="{x:Type Brush}" x:Key="brushes">
+            <SolidColorBrush Color="#FF15BBC3"/>
+            <SolidColorBrush Color="#9F15C3"/>
+            <SolidColorBrush Color="#FF8E01"/>
+            <SolidColorBrush Color="#339933"/>
+            <SolidColorBrush Color="#00AAFF"/>
+            <SolidColorBrush Color="#818183"/>
+            <SolidColorBrush Color="#000033"/>
+        </x:ArrayExtension>
+    </Page.Resources>
+    <DockPanel>
+        <Grid DockPanel.Dock="Top" Height="260">
+            <ListView IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding}" Margin="10" Height="150" x:Name="listBox1" ButtonBase.Click="OnColumnHeaderClick">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Warehouse" Width="280" DisplayMemberBinding="{Binding Warehouse}"/>
+                        <GridViewColumn Header="InAmount" Width="150" DisplayMemberBinding="{Binding InAmount, StringFormat='N2'}"/>
+                        <GridViewColumn Header="OutAmount" Width="150" DisplayMemberBinding="{Binding OutAmount, StringFormat='N2'}"/>
+                        <GridViewColumn Header="Remaining" Width="150" DisplayMemberBinding="{Binding Remaining, StringFormat='N2'}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+
+        <c:PieChartLayout HorizontalAlignment="Center" x:Name="piePlotter" PlottedProperty="Remaining" Margin="20">
+            <c:PieChartLayout.ColorSelector>
+                <c:IndexedColourSelector Brushes="{StaticResource brushes}"/>
+            </c:PieChartLayout.ColorSelector>
+        </c:PieChartLayout>
+    </DockPanel>
+</Page>

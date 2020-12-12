@@ -1,0 +1,649 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="testJianZhanagModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="300" />
+          <Property Name="Cost" Type="double" />
+          <Property Name="CurrentQuantity" Type="int" />
+          <Property Name="WarehouseId" Type="int" Nullable="false" />
+          <Property Name="Disabled" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StorageChanges">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ChangeType" Type="enum" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="Price" Type="double" Nullable="false" />
+          <Property Name="SuppliersClientsId" Type="int" Nullable="false" />
+          <Property Name="WarehouseId" Type="int" Nullable="false" />
+          <Property Name="ChangeDate" Type="date" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="TransportID" Type="int" />
+        </EntityType>
+        <EntityType Name="SuppliersClients">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="150" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="45" />
+          <Property Name="Type" Type="enum" Nullable="false" />
+          <Property Name="WarehouseID" Type="int" Nullable="false" />
+          <Property Name="Disabled" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Transports">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransType" Type="enum" Nullable="false" />
+          <Property Name="ClientID" Type="int" Nullable="false" />
+          <Property Name="TransportDate" Type="date" Nullable="false" />
+          <Property Name="WarehouseId" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="WarehouseID" Type="int" Nullable="false" />
+          <Property Name="Language" Type="enum" />
+          <Property Name="IsAdmin" Type="bit" />
+          <Property Name="Photo" Type="mediumblob" />
+        </EntityType>
+        <EntityType Name="Warehouses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="150" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <Association Name="Change_Product">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="StorageChanges" Type="Self.StorageChanges" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StorageChanges">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Change_SupplierClient">
+          <End Role="SuppliersClients" Type="Self.SuppliersClients" Multiplicity="1" />
+          <End Role="StorageChanges" Type="Self.StorageChanges" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SuppliersClients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StorageChanges">
+              <PropertyRef Name="SuppliersClientsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Change_User">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StorageChanges" Type="Self.StorageChanges" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StorageChanges">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Change_Warehouse">
+          <End Role="Warehouses" Type="Self.Warehouses" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StorageChanges" Type="Self.StorageChanges" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StorageChanges">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_Warehouse">
+          <End Role="Warehouses" Type="Self.Warehouses" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Product_Warehouse">
+          <End Role="Warehouses" Type="Self.Warehouses" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="supcli_warehouse">
+          <End Role="Warehouses" Type="Self.Warehouses" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SuppliersClients" Type="Self.SuppliersClients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SuppliersClients">
+              <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="transport_client">
+          <End Role="SuppliersClients" Type="Self.SuppliersClients" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Transports" Type="Self.Transports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SuppliersClients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transports">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="transport_user">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Transports" Type="Self.Transports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transports">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="transport_warehouser">
+          <End Role="Warehouses" Type="Self.Warehouses" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Transports" Type="Self.Transports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transports">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="testJianZhanagModelStoreContainer">
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="testJianZhanag" store:Type="Tables" />
+          <EntitySet Name="StorageChanges" EntityType="Self.StorageChanges" Schema="testJianZhanag" store:Type="Tables" />
+          <EntitySet Name="SuppliersClients" EntityType="Self.SuppliersClients" Schema="testJianZhanag" store:Type="Tables" />
+          <EntitySet Name="Transports" EntityType="Self.Transports" Schema="testJianZhanag" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="testJianZhanag" store:Type="Tables" />
+          <EntitySet Name="Warehouses" EntityType="Self.Warehouses" Schema="testJianZhanag" store:Type="Tables" />
+          <AssociationSet Name="Change_Product" Association="Self.Change_Product">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="StorageChanges" EntitySet="StorageChanges" />
+          </AssociationSet>
+          <AssociationSet Name="Change_SupplierClient" Association="Self.Change_SupplierClient">
+            <End Role="SuppliersClients" EntitySet="SuppliersClients" />
+            <End Role="StorageChanges" EntitySet="StorageChanges" />
+          </AssociationSet>
+          <AssociationSet Name="Change_User" Association="Self.Change_User">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="StorageChanges" EntitySet="StorageChanges" />
+          </AssociationSet>
+          <AssociationSet Name="Change_Warehouse" Association="Self.Change_Warehouse">
+            <End Role="Warehouses" EntitySet="Warehouses" />
+            <End Role="StorageChanges" EntitySet="StorageChanges" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_Warehouse" Association="Self.Employee_Warehouse">
+            <End Role="Warehouses" EntitySet="Warehouses" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="Product_Warehouse" Association="Self.Product_Warehouse">
+            <End Role="Warehouses" EntitySet="Warehouses" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="supcli_warehouse" Association="Self.supcli_warehouse">
+            <End Role="Warehouses" EntitySet="Warehouses" />
+            <End Role="SuppliersClients" EntitySet="SuppliersClients" />
+          </AssociationSet>
+          <AssociationSet Name="transport_client" Association="Self.transport_client">
+            <End Role="SuppliersClients" EntitySet="SuppliersClients" />
+            <End Role="Transports" EntitySet="Transports" />
+          </AssociationSet>
+          <AssociationSet Name="transport_user" Association="Self.transport_user">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Transports" EntitySet="Transports" />
+          </AssociationSet>
+          <AssociationSet Name="transport_warehouser" Association="Self.transport_warehouser">
+            <End Role="Warehouses" EntitySet="Warehouses" />
+            <End Role="Transports" EntitySet="Transports" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="testJianZhanagModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Cost" Type="Double" />
+          <Property Name="CurrentQuantity" Type="Int32" />
+          <Property Name="WarehouseId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Warehouse" Relationship="Self.Product_Warehouse" FromRole="Products" ToRole="Warehouses" />
+          <Property Name="Disabled" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="StorageChanges" Relationship="testJianZhanagModel.Change_Product" FromRole="Product" ToRole="StorageChanx" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="StorageChanx">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ChangeType" Type="String" MaxLength="65532" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <Property Name="SuppliersClientsId" Type="Int32" Nullable="false" />
+          <Property Name="WarehouseId" Type="Int32" Nullable="false" />
+          <Property Name="ChangeDate" Type="DateTime" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="TransportID" Type="Int32" />
+          <NavigationProperty Name="SuppliersClient" Relationship="Self.Change_SupClient" FromRole="StorageChanges" ToRole="SuppliersClients" />
+          <NavigationProperty Name="User" Relationship="Self.Change_User" FromRole="StorageChanges" ToRole="Users" />
+          <NavigationProperty Name="Warehouse" Relationship="Self.Change_Warehouse" FromRole="StorageChanges" ToRole="Warehouses" />
+          <NavigationProperty Name="Product" Relationship="testJianZhanagModel.Change_Product" FromRole="StorageChanx" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="SuppliersClient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" MaxLength="65532" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="WarehouseID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="StorageChanges" Relationship="Self.Change_SupClient" FromRole="SuppliersClients" ToRole="StorageChanges" />
+          <NavigationProperty Name="Warehouse" Relationship="Self.supcli_warehouse" FromRole="SuppliersClients" ToRole="Warehouses" />
+          <NavigationProperty Name="Transports" Relationship="Self.transport_client" FromRole="SuppliersClients" ToRole="Transports" />
+          <Property Name="Disabled" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Transport">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransType" Type="String" MaxLength="65532" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ClientID" Type="Int32" Nullable="false" />
+          <Property Name="TransportDate" Type="DateTime" Nullable="false" />
+          <Property Name="WarehouseId" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SuppliersClient" Relationship="Self.transport_client" FromRole="Transports" ToRole="SuppliersClients" />
+          <NavigationProperty Name="User" Relationship="Self.transport_user" FromRole="Transports" ToRole="Users" />
+          <NavigationProperty Name="Warehouse" Relationship="Self.transport_warehouser" FromRole="Transports" ToRole="Warehouses" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="WarehouseID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="StorageChanges" Relationship="Self.Change_User" FromRole="Users" ToRole="StorageChanges" />
+          <NavigationProperty Name="Transports" Relationship="Self.transport_user" FromRole="Users" ToRole="Transports" />
+          <NavigationProperty Name="Warehouse" Relationship="Self.Employee_Warehouse" FromRole="Users" ToRole="Warehouses" />
+          <Property Name="Language" Type="String" MaxLength="65532" FixedLength="false" Unicode="false" />
+          <Property Name="IsAdmin" Type="Boolean" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Products" Relationship="Self.Product_Warehouse" FromRole="Warehouses" ToRole="Products" />
+          <NavigationProperty Name="StorageChanges" Relationship="Self.Change_Warehouse" FromRole="Warehouses" ToRole="StorageChanges" />
+          <NavigationProperty Name="SuppliersClients" Relationship="Self.supcli_warehouse" FromRole="Warehouses" ToRole="SuppliersClients" />
+          <NavigationProperty Name="Transports" Relationship="Self.transport_warehouser" FromRole="Warehouses" ToRole="Transports" />
+          <NavigationProperty Name="Users" Relationship="Self.Employee_Warehouse" FromRole="Warehouses" ToRole="Users" />
+        </EntityType>
+        <Association Name="Product_Warehouse">
+          <End Role="Warehouses" Type="Self.Warehouse" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Products" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Change_SupClient">
+          <End Role="SuppliersClients" Type="Self.SuppliersClient" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StorageChanges" Type="Self.StorageChanx" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SuppliersClients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StorageChanges">
+              <PropertyRef Name="SuppliersClientsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Change_User">
+          <End Role="Users" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StorageChanges" Type="Self.StorageChanx" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StorageChanges">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Change_Warehouse">
+          <End Role="Warehouses" Type="Self.Warehouse" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StorageChanges" Type="Self.StorageChanx" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StorageChanges">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="supcli_warehouse">
+          <End Role="Warehouses" Type="Self.Warehouse" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SuppliersClients" Type="Self.SuppliersClient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SuppliersClients">
+              <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="transport_client">
+          <End Role="SuppliersClients" Type="Self.SuppliersClient" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Transports" Type="Self.Transport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SuppliersClients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transports">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="transport_user">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Transports" Type="Self.Transport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transports">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="transport_warehouser">
+          <End Role="Warehouses" Type="Self.Warehouse" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Transports" Type="Self.Transport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transports">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_Warehouse">
+          <End Role="Warehouses" Type="Self.Warehouse" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="testJianZhanagEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="StorageChanges" EntityType="Self.StorageChanx" />
+          <EntitySet Name="SuppliersClients" EntityType="Self.SuppliersClient" />
+          <EntitySet Name="Transports" EntityType="Self.Transport" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Warehouses" EntityType="Self.Warehouse" />
+          <AssociationSet Name="Product_Warehouse" Association="Self.Product_Warehouse">
+            <End Role="Warehouses" EntitySet="Warehouses" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="Change_SupClient" Association="Self.Change_SupClient">
+            <End Role="SuppliersClients" EntitySet="SuppliersClients" />
+            <End Role="StorageChanges" EntitySet="StorageChanges" />
+          </AssociationSet>
+          <AssociationSet Name="Change_User" Association="Self.Change_User">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="StorageChanges" EntitySet="StorageChanges" />
+          </AssociationSet>
+          <AssociationSet Name="Change_Warehouse" Association="Self.Change_Warehouse">
+            <End Role="Warehouses" EntitySet="Warehouses" />
+            <End Role="StorageChanges" EntitySet="StorageChanges" />
+          </AssociationSet>
+          <AssociationSet Name="supcli_warehouse" Association="Self.supcli_warehouse">
+            <End Role="Warehouses" EntitySet="Warehouses" />
+            <End Role="SuppliersClients" EntitySet="SuppliersClients" />
+          </AssociationSet>
+          <AssociationSet Name="transport_client" Association="Self.transport_client">
+            <End Role="SuppliersClients" EntitySet="SuppliersClients" />
+            <End Role="Transports" EntitySet="Transports" />
+          </AssociationSet>
+          <AssociationSet Name="transport_user" Association="Self.transport_user">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Transports" EntitySet="Transports" />
+          </AssociationSet>
+          <AssociationSet Name="transport_warehouser" Association="Self.transport_warehouser">
+            <End Role="Warehouses" EntitySet="Warehouses" />
+            <End Role="Transports" EntitySet="Transports" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_Warehouse" Association="Self.Employee_Warehouse">
+            <End Role="Warehouses" EntitySet="Warehouses" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="Change_Product" Association="testJianZhanagModel.Change_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="StorageChanx" EntitySet="StorageChanges" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="Change_Product">
+          <End Type="testJianZhanagModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="testJianZhanagModel.StorageChanx" Role="StorageChanx" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StorageChanx">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="testJianZhanagModelStoreContainer" CdmEntityContainer="testJianZhanagEntities">
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="testJianZhanagModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Disabled" ColumnName="Disabled" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="CurrentQuantity" ColumnName="CurrentQuantity" />
+                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StorageChanges">
+            <EntityTypeMapping TypeName="testJianZhanagModel.StorageChanx">
+              <MappingFragment StoreEntitySet="StorageChanges">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ChangeType" ColumnName="ChangeType" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="SuppliersClientsId" ColumnName="SuppliersClientsId" />
+                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+                <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TransportID" ColumnName="TransportID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SuppliersClients">
+            <EntityTypeMapping TypeName="testJianZhanagModel.SuppliersClient">
+              <MappingFragment StoreEntitySet="SuppliersClients">
+                <ScalarProperty Name="Disabled" ColumnName="Disabled" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transports">
+            <EntityTypeMapping TypeName="testJianZhanagModel.Transport">
+              <MappingFragment StoreEntitySet="Transports">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TransType" ColumnName="TransType" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="TransportDate" ColumnName="TransportDate" />
+                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="testJianZhanagModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+                <ScalarProperty Name="Language" ColumnName="Language" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Warehouses">
+            <EntityTypeMapping TypeName="testJianZhanagModel.Warehouse">
+              <MappingFragment StoreEntitySet="Warehouses">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
