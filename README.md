@@ -4,6 +4,7 @@ It is a bilingual system, supports French and English.
 
 C#, WPF, Entity framework, MySQL
 
+
 Login:
 ![image](https://github.com/dimzhj/SmartFlow/blob/main/login.png)
 
